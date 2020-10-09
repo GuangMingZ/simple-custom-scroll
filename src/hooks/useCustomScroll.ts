@@ -1,6 +1,8 @@
-import { useEffect } from 'react';
+/* eslint-disable */
+import { useEffect } from "react";
 
-const win = typeof window === 'undefined' ? ({} as any) : window;
+const win = typeof window === "undefined" ? ({} as any) : window;
+const doc = typeof window === "undefined" ? ({} as any) : document;
 
 /**
  * 使用transform实现左、右scroll-水平滚动
@@ -16,7 +18,7 @@ const win = typeof window === 'undefined' ? ({} as any) : window;
  */
 
 export default function useCustomScroll(
-  $dom: HTMLElement,
+  containerId: string,
   targetDivIds: string[] = []
 ) {
   let touchStartX: number = 0,
@@ -33,9 +35,9 @@ export default function useCustomScroll(
     }
     touchStartX = e.touches[0].pageX;
     touchStartY = e.touches[0].pageY;
-    translatePre = (target as HTMLHtmlElement).getAttribute('data-translate');
+    translatePre = (target as HTMLHtmlElement).getAttribute("data-translate");
     if (!translatePre) {
-      (target as HTMLElement).setAttribute('data-translate', '0');
+      (target as HTMLElement).setAttribute("data-translate", "0");
       translatePre = 0;
     }
     isMoveX = false;
@@ -55,10 +57,10 @@ export default function useCustomScroll(
     let transformValStr = transformStr.match(/\((.+?)\)/g);
     if (transformValStr) {
       let transformVal = transformValStr[0]
-        .replace(/px/g, '')
-        .split(',')[0]
-        .replace(/[^0-9 | . ｜ -]/gi, '');
-      (target as HTMLElement).setAttribute('data-translate', transformVal);
+        .replace(/px/g, "")
+        .split(",")[0]
+        .replace(/[^0-9 | . ｜ -]/gi, "");
+      (target as HTMLElement).setAttribute("data-translate", transformVal);
     }
   };
 
@@ -95,15 +97,17 @@ export default function useCustomScroll(
   };
 
   useEffect(() => {
-    if ($dom) {
-      $dom.addEventListener('touchmove', touchMoveHandle);
-      $dom.addEventListener('touchstart', touchStartHandle);
-      $dom.addEventListener('touchend', touchEndHandle);
+    if (containerId) {
+      const $dom = doc.getElementById(containerId);
+
+      $dom.addEventListener("touchmove", touchMoveHandle);
+      $dom.addEventListener("touchstart", touchStartHandle);
+      $dom.addEventListener("touchend", touchEndHandle);
       return () => {
-        $dom.removeEventListener('touchmove', touchMoveHandle);
-        $dom.removeEventListener('touchstart', touchStartHandle);
-        $dom.removeEventListener('touchend', touchEndHandle);
+        $dom.removeEventListener("touchmove", touchMoveHandle);
+        $dom.removeEventListener("touchstart", touchStartHandle);
+        $dom.removeEventListener("touchend", touchEndHandle);
       };
     }
-  }, [$dom]);
+  }, []);
 }
