@@ -1,0 +1,35 @@
+@designWidth: 750; //设计图的宽度
+@designWidth375: 375; //375设计图的宽度
+@designHeight: 1194; //设计图屏幕高度
+@windowRems: 24; //整个屏幕宽度分成几个rem
+@remPerPx: @windowRems / @designWidth; //设计图上一个像素代表多少rem，用这个值乘以设计图上的像素尺寸，就等于实际rem值
+@remPerPx375: @windowRems / @designWidth375;
+@vwPerPx: 100 / @designWidth; //设计图上一个像素代表多少vw，用这个值乘以设计图上的像素尺寸，就等于实际vw值
+@vwPerPx375: 100 / @designWidth375;
+@vhPerPx: 100 / @designHeight; //设计图上一个像素代表多少vh，用这个值乘以设计图上的像素尺寸，就等于实际vh值
+
+.clear {
+  &::after {
+    display: block;
+    content: '';
+    clear: both;
+  }
+}
+
+.line-1px {
+  height: 1px;
+  background-color: #efefef;
+  box-shadow: 0px -1px 0px 0px rgba(239, 239, 239, 1);
+
+  @media (-webkit-min-device-pixel-ratio: 1.5) and (-webkit-max-device-pixel-ratio: 2.49) {
+    & {
+      transform: scaleY(0.5);
+    }
+  }
+
+  @media (-webkit-min-device-pixel-ratio: 2.5) {
+    & {
+      transform: scaleY(0.33333);
+    }
+  }
+}
