@@ -1,10 +1,13 @@
 import React from "react";
 import "./App.less";
-import useCustomScroll from "./hooks/useCustomScroll";
-import HorizontalImg from "./horizontal.jpeg";
+import useHorizontalScroll from "./hooks/useHorizontalScroll";
+import useVerticalScroll from "./hooks/useVerticalScroll";
+import HorizontalImg from "./imgs/horizontal.jpg";
+import VerticalImg from "./imgs/vertical.jpg";
 
 function App() {
-  useCustomScroll("horizontal-container", ["horizontal-img"]);
+  useHorizontalScroll("horizontal-container", ["horizontal-img"]);
+  useVerticalScroll("vertical-container", ["vertical-img"]);
 
   return (
     <div className="app">
@@ -20,6 +23,16 @@ function App() {
       </section>
       <section className={"vertical-scroll"}>
         <h2 className={"section-title"}>垂直滚动</h2>
+        <div
+          id="vertical-container"
+          style={{ height: "300px", overflowY: "hidden" }}
+        >
+          <img
+            src={VerticalImg}
+            alt={"垂直滚动示例图"}
+            id={"vertical-img"}
+          ></img>
+        </div>
       </section>
     </div>
   );

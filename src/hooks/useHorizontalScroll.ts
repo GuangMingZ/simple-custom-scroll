@@ -79,7 +79,10 @@ export default function useCustomScroll(
       move > Math.abs(touchStartY - touchEndY) &&
       move > win.innerWidth / 100
     ) {
-      e.preventDefault();
+      if (e.cancelable) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
       if (touchStartX > touchEndX) {
         // 左滑
         move = move > maxMoveLeftX ? maxMoveLeftX : parseFloat(move.toFixed(2));
